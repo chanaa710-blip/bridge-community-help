@@ -121,8 +121,6 @@ bridge-community-help/          👈 repository root on GitHub
 │   ├── Bridge.sln
 │   └── .gitignore              (bin/, obj/)
 │
-├── docs/                        (optional: diagrams, screenshots)
-├── LICENSE
 └── README.md                    👈 this file
 ```
 
