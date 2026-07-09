@@ -1,0 +1,31 @@
+<div class="message-container" [class.expanded]="isExpanded">
+  <div class="meta">
+    <span class="name">מאת: {{ ans.userName || 'אנונימי' }}</span>
+  </div>
+
+  <div class="bubble" (click)="toggle()">
+    
+    @if(isMyMessage) {
+      <div class="menu-container" (click)="$event.stopPropagation()">
+        <span class="menu-trigger" (click)="showMenu = !showMenu">⋮</span>
+        @if(showMenu) {
+          <div class="menu-dropdown">
+            <button (click)="onDelete($event)">מחק הודעה 🗑️</button>
+          </div>
+        }
+      </div>
+    } <p class="text">
+      {{ isExpanded ? ans.content : (ans.content | truncate:60) }}
+    </p>
+
+    @if (ans.content.length > 60) {
+      <span class="more">
+        {{ isExpanded ? 'הצג פחות' : 'קרא עוד' }}
+      </span>
+    }
+    
+    <span class="message-date">
+      {{ ans.createdAt | date:'HH:mm' }}
+    </span>
+  </div>
+</div>

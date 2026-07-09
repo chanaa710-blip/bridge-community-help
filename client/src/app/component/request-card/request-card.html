@@ -1,0 +1,43 @@
+<div class="card-container" [ngClass]="'status-' + request.status">
+  <div class="card-image">
+    <span>{{ request.category?.icon || '🤝' }}</span>
+    <span class="status-badge">
+      @switch (request.status) {
+        @case (RequestStatus.Open) { פתוח }
+        @case (RequestStatus.Canceled) { בוטל }
+        @case (RequestStatus.Closed) { סגור }
+      }
+    </span>
+  </div>
+  <div class="card-header">
+    <h3 class="card-title">{{ request.title }}</h3>
+    <div class="badges-row">
+      <span class="user-badge">מאת: {{ request.userName || 'אנונימי' }}</span>
+      @if (request.category) {
+      <span class="category-badge">{{ request.category.icon }} {{ request.category.name }}</span>
+      }
+    </div>
+  </div>
+  <div class="card-body" (click)="toggleExpand()" style="cursor: pointer;">
+    <p class="card-content">
+      {{ isExpanded ? request.content : (request.content | truncate:20) }}
+    </p>
+    @if (request.content.length > 50) {
+    <small class="toggle-text">
+      {{ isExpanded ? 'הצג פחות' : 'קרא עוד...' }}
+    </small>
+    }
+  </div>
+  <div class="card-footer">
+    <a [routerLink]="['/request-details', request.id]" class="details-btn">לפרטים נוספים</a>
+  </div>
+  <div class="card-footer-actions">
+    @if (showActions) {
+    <button class="btn-cancel" (click)="updateStatus(RequestStatus.Canceled)">ביטול</button>
+    <button class="btn-close" (click)="updateStatus(RequestStatus.Closed)">סגירה</button>
+    }
+    @if (showDeleted) {
+    <button class="btn-delete" (click)="deleteRequest()">מחיקה</button>
+    }
+  </div>
+</div>

@@ -1,0 +1,245 @@
+:host {
+  display:block;
+  width:100%;
+}
+
+.message-container {
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  width:100%;
+  max-width:100%;
+  margin-bottom:10px;
+  direction:rtl;
+  font-family:var(--font-body);
+  box-sizing:border-box;
+}
+
+.message-container.other {
+  align-items:flex-start;
+}
+
+.meta {
+
+  font-size:11px;
+
+  color:var(--text-muted);
+
+  margin-bottom:4px;
+
+}
+
+
+/* בועה */
+
+.bubble {
+  position:relative;
+  width:fit-content;
+  max-width:75%;
+  min-width:90px;
+  background:var(--paper);
+  color:var(--text-main);
+  border:1px solid var(--stone-deep);
+  border-radius:16px;
+  padding:10px 12px;
+  box-shadow:
+  0 4px 10px rgba(22,33,62,.06);
+  cursor:pointer;
+  transition:.2s;
+  overflow-wrap:anywhere;
+  box-sizing:border-box;
+}
+
+.message-container.expanded .bubble {
+  max-width:calc(100% - 20px);
+  background:var(--stone);
+}
+
+
+.message-container.other .bubble {
+  background:#faf7ef;
+}
+
+
+.bubble:hover {
+
+  transform:translateY(-1px);
+
+  box-shadow:
+  0 8px 18px rgba(22,33,62,.12);
+
+}
+
+
+
+.text {
+
+  margin:0;
+
+  padding-right:20px;
+
+
+  font-size:14px;
+
+  line-height:1.6;
+
+  color:var(--text-main);
+
+  white-space:pre-wrap;
+
+  overflow-wrap:anywhere;
+
+}
+
+
+
+/* קרא עוד */
+
+.more {
+
+  display:inline-block;
+
+  margin-top:6px;
+
+  font-size:11px;
+
+  font-weight:600;
+
+  color:var(--gold);
+
+}
+
+
+
+/* שעה */
+
+.message-date {
+
+  display:block;
+
+  margin-top:6px;
+
+  font-size:11px;
+
+  color:var(--text-muted);
+
+  text-align:left;
+
+}
+
+
+
+/* תפריט מחיקה */
+
+.menu-container {
+
+  position:absolute;
+
+  top:5px;
+
+  right:5px;
+
+}
+
+
+
+.menu-trigger {
+
+  font-size:18px;
+
+  color:var(--text-muted);
+
+  padding:2px 6px;
+
+  cursor:pointer;
+
+}
+
+
+
+.menu-dropdown {
+
+  position:absolute;
+
+  top:24px;
+
+  right:auto;
+
+  left:0;
+
+
+  max-width:calc(100vw - 30px);
+
+
+  background:var(--paper);
+
+  border:1px solid var(--stone-deep);
+
+  border-radius:8px;
+
+
+  box-shadow:
+  0 6px 14px rgba(22,33,62,.12);
+
+
+  padding:5px;
+
+  z-index:100;
+
+}
+
+
+
+.menu-dropdown button {
+
+  background:none;
+
+  border:none;
+
+
+  color:#b43c2f;
+
+
+  cursor:pointer;
+
+
+  font-family:var(--font-body);
+
+  font-size:.85rem;
+
+  font-weight:600;
+
+
+  white-space:nowrap;
+
+  padding:6px 10px;
+
+}
+
+
+.menu-dropdown button:hover {
+
+  background:#fbf0e9;
+
+  border-radius:6px;
+
+}
+
+
+
+@media(max-width:480px){
+
+  .bubble {
+
+    max-width:88%;
+
+  }
+
+
+  .message-container.expanded .bubble {
+
+    max-width:94%;
+
+  }
+
+}

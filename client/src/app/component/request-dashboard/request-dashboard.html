@@ -1,0 +1,63 @@
+@if (!userService.currentUser) {
+<div class="unauthenticated-wrapper">
+  <div class="unauthenticated-message">
+    <div class="illustration-placeholder">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+        <path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 7v5l3 3" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </div>
+    <h2>ברוכים הבאים ל-Bridge</h2>
+    <p>כדי לצפות בבקשות ולהיות חלק מקהילה שתומכת זה בזה, הצטרפו אלינו עכשיו.</p>
+    <div class="auth-buttons">
+      <a routerLink="/login" class="btn-login">התחברות</a>
+      <a routerLink="/register" class="btn-register">הרשמה</a>
+    </div>
+  </div>
+</div>
+}
+@else {
+<div class="dashboard-header-bg"></div>
+<div class="dashboard-container">
+  <header class="main-title">
+    <h1>עוזרים ליהודים בעולם</h1>
+    <p class="subtitle">מצא מישהו שזקוק לך, או בקש סיוע מהקהילה</p>
+    <svg class="hero-illustration" viewBox="0 0 700 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10,17 C150,5 250,30 350,17 C450,5 550,30 690,17"
+            stroke="#e3be72" stroke-width="1.2" stroke-linecap="round"/>
+      <path d="M330,17 C336,9 348,7 356,12" stroke="#e3be72" stroke-width="1.2" stroke-linecap="round"/>
+      <path d="M344,17 C350,10 360,9 368,14" stroke="#e3be72" stroke-width="1.2" stroke-linecap="round"/>
+      <ellipse cx="352" cy="10" rx="5" ry="2.8" fill="#e3be72" opacity="0.85" transform="rotate(-20 352 10)"/>
+      <ellipse cx="362" cy="12" rx="5" ry="2.8" fill="#e3be72" opacity="0.85" transform="rotate(-10 362 12)"/>
+    </svg>
+  </header>
+  <div class="filter-actions">
+    <div class="input-group">
+      <label class="input-label">חיפוש לפי רדיוס (ק"מ)</label>
+      <input type="number" [(ngModel)]="radiusInKm" placeholder="הכנס מרחק" min="1" class="radius-input" />
+    </div>
+    <div class="input-group">
+      <label class="input-label">סינון לפי קטגוריה</label>
+      <select [(ngModel)]="selectedCategoryId" class="category-select">
+        <option [ngValue]="null">כל הקטגוריות</option>
+        @for(cat of categories(); track cat.id) {
+        <option [value]="cat.id">{{cat.icon}} {{cat.name}}</option>
+        }
+      </select>
+    </div>
+    <button (click)="filterByLocation()" class="btn-filter">חפש בקשות</button>
+  </div>
+  <div class="requests-grid">
+    @if(error) {
+    <div class="error-message"><p>אירעה שגיאה בטעינת הבקשות. נסה שוב מאוחר יותר.</p></div>
+    }
+    @else if(arr_requests().length === 0) {
+    <div class="empty-state"><p>כרגע אין בקשות פתוחות באזור שנבחר.</p></div>
+    }
+    @else {
+    @for (item of arr_requests(); track $index) {
+    <app-request-card [request]="item"></app-request-card>
+    }
+    }
+  </div>
+</div>
+}

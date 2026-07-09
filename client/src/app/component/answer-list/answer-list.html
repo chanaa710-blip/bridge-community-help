@@ -1,0 +1,34 @@
+<div class="chat-container">
+  <div class="chat-header">
+    <h4>שיחה סביב הבקשה 💬</h4>
+    <span class="online-indicator">צ'אט קהילתי</span>
+  </div>
+
+  <div class="messages-viewport">
+    @for(ans of answers();track ans.id; let i = $index) {
+    @if(isNewDay(ans.createdAt, i > 0 ? answers()[i-1].createdAt : null)) {
+    <div class="date-divider">
+      @if (isToday(ans.createdAt)) {
+      היום
+      } @else {
+      {{ ans.createdAt | date:'dd/MM/yyyy' }}
+      }
+    </div>
+    }
+    <div class="message-wrapper" [class.owner-message]="ans.userId === requestOwnerId">
+
+      <div class="message-info">
+        @if(ans.userId === requestOwnerId) {
+        <span class="owner-tag">כותב הבקשה ✨</span>
+        }
+      </div>
+
+      <app-answer-item [ans]="ans" (delete)="handleDelete($event)"></app-answer-item>
+    </div>
+    } @empty {
+    <div class="empty-state-chat">
+      <p>💬 עדיין אין תגובות. תהיו הראשונים לעזור!</p>
+    </div>
+    }
+  </div>
+</div>

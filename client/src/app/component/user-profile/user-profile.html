@@ -1,0 +1,89 @@
+<div class="profile-page-container">
+
+  <div class="page-header">
+    <h2>הפרופיל שלי</h2>
+    <p>ניהול הפרטים האישיים, המיקום והפעילות שלך בקהילה.</p>
+  </div>
+
+  <div class="top-section-grid">
+    <div class="glass-card profile-card">
+      <div class="avatar-container">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="50" fill="#eff6ff" />
+          <path
+            d="M50 48C58.8366 48 66 40.8366 66 32C66 23.1634 58.8366 16 50 16C41.1634 16 34 23.1634 34 32C34 40.8366 41.1634 48 50 48Z"
+            fill="#2563eb" opacity="0.8" />
+          <path d="M22 84C22 71.0544 37.1957 60 50 60C62.8043 60 78 71.0544 78 84" stroke="#2563eb" stroke-width="8"
+            stroke-linecap="round" stroke-linejoin="round" opacity="0.8" />
+        </svg>
+      </div>
+
+      <div class="form-group">
+        <label>שם מלא</label>
+        <input type="text" [(ngModel)]="editUser.name" class="form-control" placeholder="הכניסי שם מלא">
+      </div>
+
+      <div class="form-group">
+        <label>טלפון</label>
+        <input type="text" [(ngModel)]="editUser.phone" class="form-control" placeholder="מספר טלפון">
+      </div>
+
+      <div class="form-group">
+        <label>אימייל <span class="read-only-badge">קריאה בלבד</span></label>
+        <input type="text" [value]="editUser.email" disabled class="form-control disabled-input">
+      </div>
+    </div>
+
+    <div class="glass-card location-card">
+      <div class="card-title">
+        <h3>המיקום שלי</h3>
+        <p>מעודכן עבור קבלת התראות ובקשות בסביבתך</p>
+      </div>
+
+      <div class="location-actions">
+        <input #addressInput type="text" class="form-control search-input" placeholder="התחילי להקליד כתובת..." />
+        <button type="button" class="btn-location" (click)="setCurrentLocation()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+          המיקום הנוכחי שלי
+        </button>
+      </div>
+
+      <div class="map-section">
+       <div #mapContainer class="map-container"></div>
+      </div>
+    </div>
+    <div class="save-action-container">
+      <button class="primary-btn-large" (click)="saveProfile()">
+        שמירת שינויים
+      </button>
+    </div>
+  </div>
+
+  <div class="activity-section">
+    <div class="tabs-container">
+      <div class="tabs">
+        <button (click)="currentTab = 'active'" [class.active]="currentTab === 'active'">בקשות פעילות</button>
+        <button (click)="currentTab = 'closed'" [class.active]="currentTab === 'closed'">היסטוריית בקשות</button>
+      </div>
+    </div>
+
+    <div class="requests-grid">
+      @if (currentTab === 'active') {
+      @for (req of activeRequests(); track req.id) {
+      <app-request-card [request]="req" [showActions]="true" [showDeleted]="true"
+        (statusChanged)="handleStatusChange(req.id!, $event)" (delete)="handleDelete(req.id!)">
+      </app-request-card>
+      }
+      } @else {
+      @for (req of closedRequests(); track req.id) {
+      <app-request-card [request]="req" [showDeleted]="true" (delete)="handleDelete(req.id!)">
+      </app-request-card>
+      }
+      }
+    </div>
+  </div>
+</div>

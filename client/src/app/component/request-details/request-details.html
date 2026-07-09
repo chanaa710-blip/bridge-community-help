@@ -1,0 +1,48 @@
+@if(request){
+<div class="details-container">
+
+  <!-- HEADER SECTION -->
+  <div class="request-header">
+
+    <div class="title-section">
+      <h1>{{ request.title }}</h1>
+
+      <div class="meta">
+        <span>מאת: {{ request?.userName || 'אנונימי' }}</span>
+        @if (request.category) {
+        <span class="category">{{ request.category.icon }} {{ request.category.name }}</span>
+        }
+        <span class="status">
+          סטטוס: {{ request.status | statusText }}
+        </span>
+      </div>
+
+    </div>
+
+  </div>
+  <div class="content-card">
+    <p>{{ request.content }}</p>
+  </div>
+
+  <div class="details-grid">
+
+    <div class="answers-panel">
+      <h3>תגובות והצעות עזרה</h3>
+
+      <app-answer-list #ansList [requestId]="request.id!" [requestOwnerId]="request.userId!">
+      </app-answer-list>
+
+      <app-add-answer [requestId]="request.id!" (answerAdded)="onAnswerAdded()">
+      </app-add-answer>
+    </div>
+
+  </div>
+
+</div>
+}
+@else {
+<div class="loading-state">
+  <h2>טוען נתונים... ⏳</h2>
+  <p>אם זה נתקע, ייתכן שיש בעיה בשרת.</p>
+</div>
+}

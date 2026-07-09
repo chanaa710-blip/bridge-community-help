@@ -1,0 +1,89 @@
+<div class="map-container">
+  <div class="map-controls">
+    <div class="toggle-group">
+      <button [class.active]="viewType === 'requests'" (click)="viewType = 'requests'; loadData()">
+        🔍 הצג בקשות עזרה
+      </button>
+      <button [class.active]="viewType === 'users'" (click)="viewType = 'users'; loadData()">
+        👥 הצג מתנדבים
+      </button>
+    </div>
+
+    @if (viewType === 'requests') {
+      <div class="radius-control">
+        <label>קטגוריה:</label>
+        <select [(ngModel)]="selectedCategoryId" (change)="loadData()" style="padding: 5px; border-radius: 4px; border: 1px solid #ccc; font-size: 14px; margin-left: 10px; background: white;">
+          <option [ngValue]="null">כל הקטגוריות</option>
+          @for(cat of categories(); track cat.id) { <option [value]="cat.id">{{cat.icon}} {{cat.name}}</option>
+          }
+        </select>
+      </div>
+    }
+
+    <div class="radius-control">
+      <label>רדיוס (ק"מ):</label>
+      <input type="number" [(ngModel)]="radiusInKm" (change)="loadData()" min="1">
+    </div>
+  </div>
+
+  <google-map height="100%" width="100%" [center]="center" [zoom]="zoom" [options]="mapOptions">
+    <map-marker [position]="center" [title]="'המיקום שלי'" [options]="{ 
+    icon: {
+      url: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png' 
+    } 
+  }">
+    </map-marker>
+
+    @if (viewType === 'requests') {
+    @for (req of requestService.arr_requests; track req.id) {
+    <map-marker #marker="mapMarker" [position]="{lat: req.lat!, lng: req.lng!}" [title]="req.title!"
+      [options]="{ label: { text: getCategoryIcon(req), fontSize: '20px', className: 'category-marker-label' } }"
+      (mapClick)="openInfoWindow(marker, req, infoWindow)">
+    </map-marker>
+    }
+    }
+
+    <map-info-window #infoWindow="mapInfoWindow">
+      @if (selectedItem) {
+      <div class="custom-info-window" dir="rtl">
+        <div class="info-header">
+          <span class="info-category">
+            @if (viewType === 'requests' && selectedItem.category) {
+              {{ selectedItem.category.icon }} {{ selectedItem.category.name }}
+            } @else {
+              {{ viewType === 'requests' ? 'בקשת עזרה' : 'מתנדב/ת' }}
+            }
+          </span>
+          <h3>{{ viewType === 'requests' ? selectedItem.title : selectedItem.name }}</h3>
+        </div>
+
+        <div class="info-body">
+          @if (viewType === 'requests') {
+          <p class="info-preview">{{ selectedItem.content | truncate:60 }}</p>
+          <button class="action-btn primary" (click)="router.navigate(['/request-details', selectedItem.id])">
+            לפרטים המלאים
+          </button>
+          }
+
+          @if (viewType === 'users') {
+          <p class="info-description">זמין/ה לעזור באזור שלך</p>
+          <a [href]="'https://mail.google.com/mail/?view=cm&fs=1&to=' + selectedItem.email" target="_blank"
+            class="action-btn email">
+            <span>📧</span> שלח מייל דרך Gmail
+          </a>
+          }
+        </div>
+      </div>
+      }
+    </map-info-window>
+
+    @if (viewType === 'users') {
+    @for (user of userService.arr_users; track user.id) {
+    <map-marker #userMarker="mapMarker" [position]="{lat: user.lat!, lng: user.lng!}"
+      [options]="{ icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png' }" [title]="user.name!"
+      (mapClick)="openInfoWindow(userMarker, user, infoWindow)"> </map-marker>
+    }
+    }
+
+  </google-map>
+</div>

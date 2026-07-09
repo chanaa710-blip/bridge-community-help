@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36429.23 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.Api", "Bridge.Api\Bridge.Api.csproj", "{3A236C39-84C8-4549-AF4A-A73845C15F60}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.Data", "Bridge.Data\Bridge.Data.csproj", "{4EC32AFA-5C6F-4668-A6D8-819E278274CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.Core", "Bridge.Core\Bridge.Core.csproj", "{63809BA8-6F56-4132-8C3E-F5253DE3ACC2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.Service", "Bridge.Service\Bridge.Service.csproj", "{FDB521AC-AE2D-49D8-B44A-E09C8F281760}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3A236C39-84C8-4549-AF4A-A73845C15F60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A236C39-84C8-4549-AF4A-A73845C15F60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A236C39-84C8-4549-AF4A-A73845C15F60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A236C39-84C8-4549-AF4A-A73845C15F60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EC32AFA-5C6F-4668-A6D8-819E278274CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EC32AFA-5C6F-4668-A6D8-819E278274CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EC32AFA-5C6F-4668-A6D8-819E278274CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EC32AFA-5C6F-4668-A6D8-819E278274CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63809BA8-6F56-4132-8C3E-F5253DE3ACC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63809BA8-6F56-4132-8C3E-F5253DE3ACC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63809BA8-6F56-4132-8C3E-F5253DE3ACC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63809BA8-6F56-4132-8C3E-F5253DE3ACC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDB521AC-AE2D-49D8-B44A-E09C8F281760}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDB521AC-AE2D-49D8-B44A-E09C8F281760}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDB521AC-AE2D-49D8-B44A-E09C8F281760}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDB521AC-AE2D-49D8-B44A-E09C8F281760}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3C65CB34-F2C0-4AB9-920D-80F0BE82169D}
+	EndGlobalSection
+EndGlobal

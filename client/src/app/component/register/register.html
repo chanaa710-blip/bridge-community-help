@@ -1,0 +1,49 @@
+<div class="register-page-container">
+    <div class="register-card">
+        <div class="register-header">
+            <h2>הצטרפות ל-Bridge</h2>
+            <p>בנו פרופיל והתחילו לקחת חלק בקהילה התומכת שלנו</p>
+        </div>
+
+        <form [formGroup]="myform">
+            @for(f of arr; track $index) {
+            <div class="field-wrapper">
+                <label class="form-label">{{ translations[f] }}</label>
+                <input [placeholder]="'הכניסי ' + translations[f] + '...'" [name]="f" [formControlName]="f"
+                    class="form-control" [type]="f === 'password' ? 'password' : 'text'"> <!-- תיקון ה-p הקטנה כאן -->
+
+                @if(myform.controls[f].errors && (myform.controls[f].touched || myform.controls[f].dirty)) {
+                <div class="error-container">
+                    @if(myform.controls[f].errors['required']){ <p>שדה זה הינו חובה</p> }
+                    @if(myform.controls[f].errors['pattern']){ <p>מספר הטלפון חייב להכיל 10 ספרות</p> }
+                    @if(myform.controls[f].errors['minlength']){ <p>הערך שהוזן קצר מדי</p> }
+                    @if(myform.controls[f].errors['maxlength']){ <p>הערך שהוזן ארוך מדי</p> }
+                    @if(myform.controls[f].errors['email']){ <p>כתובת אימייל אינה תקינה</p> }
+                </div>
+                }
+            </div>
+            }
+
+            <div class="location-section">
+                <label class="form-label">אזור הפעילות</label>
+                <div class="location-input-group">
+                    <input #addressInput type="text" class="form-control location-input"
+                        placeholder="התחלי להקליד מיקום ..." />
+                    <button type="button" class="btn-location" (click)="setCurrentLocation()" title="זהה את המיקום שלי">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        המיקום שלי
+                    </button>
+                </div>
+            </div>
+
+            <button class="btn-submit" (click)="register()" [disabled]="myform.invalid">יצירת חשבון חדש</button>
+        </form>
+        <div class="register-footer">
+            <p>כבר יש לך חשבון? <a routerLink="/login">התחברי כאן</a></p>
+        </div>
+    </div>
+</div>

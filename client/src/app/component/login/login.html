@@ -1,0 +1,59 @@
+<div class="login-page-container">
+  <div class="login-card">
+    <div class="login-header">
+      <h2>ברוכים הבאים</h2>
+      <p>התחברי כדי להמשיך לעזור ולהיעזר בקהילה</p>
+    </div>
+
+    <form [formGroup]="myform">
+      <div class="field-wrapper">
+        <label class="form-label">אימייל</label>
+        <input placeholder="your@email.com" 
+               name="email" 
+               formControlName="email" 
+               class="form-control" 
+               type="text">
+        
+        @if(myform.controls['email'].errors && (myform.controls['email'].touched || myform.controls['email'].dirty)) {
+          <div class="error-container">
+            @if(myform.controls['email'].errors['required']){ <p>שדה אימייל הוא חובה</p> }
+            @if(myform.controls['email'].errors['email']){ <p>כתובת האימייל אינה תקינה</p> }
+          </div>
+        }
+      </div>
+
+      <div class="field-wrapper">
+        <label class="form-label">סיסמה</label>
+        <input placeholder="הכניסי סיסמה..." 
+               name="password" 
+               formControlName="password" 
+               class="form-control" 
+               type="password">
+
+        @if(myform.controls['password'].errors && (myform.controls['password'].touched || myform.controls['password'].dirty)) {
+          <div class="error-container">
+            @if(myform.controls['password'].errors['required']){ <p>חובה להזין סיסמה</p> }
+            @if(myform.controls['password'].errors['minlength']){ <p>הסיסמה צריכה להכיל לפחות 6 תווים</p> }
+          </div>
+        }
+      </div>
+
+       <div class="location-section">
+       <label class="form-label">עדכון מיקום נוכחי (אופציונלי)</label>
+        <div class="location-input-group">
+          <input #addressInput type="text" class="form-control location-input" placeholder="התחלי להקליד מיקום ..." />
+          <button type="button" class="btn-location" (click)="setCurrentLocation()" title="זהה את המיקום שלי">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            המיקום שלי
+          </button>
+        </div>
+      </div>
+
+      <button class="btn-submit" (click)="login()" [disabled]="myform.invalid">התחברות למערכת</button>
+      
+      <div class="login-footer">
+        <p>עוד לא רשומה? <a routerLink="/register">צרי חשבון חדש</a></p>
+      </div>
+    </form>
+  </div>
+</div>

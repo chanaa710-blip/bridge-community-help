@@ -1,0 +1,35 @@
+<nav class="navbar-container">
+  <div class="navbar-logo">
+    <a routerLink="/" (click)="closeMenu()">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+        <path d="M3 20h18M5 20V10l7-6 7 6v10M9 20v-6h6v6" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      Bridge - גשר לקהילה
+    </a>
+  </div>
+
+  <button class="menu-toggle" (click)="toggleMenu()" [attr.aria-expanded]="isMenuOpen()" aria-label="פתיחת תפריט">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="navbar-panel" [class.open]="isMenuOpen()">
+    @if(userService.currentUser) {
+    <ul class="navbar-links">
+      <li><a routerLink="/dashboard" routerLinkActive="active-link" (click)="closeMenu()">לוח בקשות</a></li>
+      <li><a routerLink="/map" routerLinkActive="active-link" (click)="closeMenu()">מפה</a></li>
+      <li><a routerLink="/add-request" class="add-request-btn" (click)="closeMenu()">בקשת עזרה חדשה +</a></li>
+      <li><a routerLink="/user-profile" routerLinkActive="active-link" (click)="closeMenu()">פרופיל</a></li>
+    </ul>
+    }
+    <div class="navbar-auth">
+      @if (!userService.currentUser) {
+      <a routerLink="/login" routerLinkActive="active-link" (click)="closeMenu()">התחברות</a>
+      <a routerLink="/register" class="register-link" (click)="closeMenu()">הרשמה</a>
+      }
+      @else {
+      <span class="user-welcome">שלום, {{ userService.currentUser.name }}</span>
+      <button class="logout-btn" (click)="logout()">התנתקות</button>
+      }
+    </div>
+  </div>
+</nav>

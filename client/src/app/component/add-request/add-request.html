@@ -1,0 +1,70 @@
+<div class="form-page-container">
+    <div class="form-wrapper">
+        <div class="form-header">
+            <h2>פתיחת בקשת עזרה</h2>
+            <p>מלאי את הפרטים וננסה למצוא עבורך את העזרה המתאימה.</p>
+        </div>
+
+        <form [formGroup]="myform">
+            <div class="field">
+                <label>כותרת</label>
+                <input formControlName="title" placeholder="לדוגמה: דרוש טרמפ לשדה התעופה" />
+            </div>
+
+            <div class="field">
+                <label>תיאור הבקשה</label>
+                <textarea formControlName="content" rows="5" placeholder="תארי בקצרה את הבקשה"></textarea>
+            </div>
+
+            <div class="field">
+                <label>קטגוריה</label>
+                <select formControlName="categoryId" (change)="onCategoryChange($event)">
+                    <option [ngValue]="null" disabled>בחר קטגוריה</option>
+                    @for(cat of categories; track $index){
+                    <option [value]="cat.id">{{cat.icon}} {{cat.name}}</option>
+                    }
+                    <option value="new">➕ קטגוריה חדשה</option>
+                </select>
+                @if(myform.get('categoryId')?.touched && myform.get('categoryId')?.value === '') {
+                <small style="color: #ef4444; font-size: 12px; margin-top: 4px; display: block;">חובה לבחור קטגוריה
+                    מתאימה</small>
+                }
+            </div>
+
+            @if(isAddingNewCategory){
+            <div class="new-category-container">
+                <h3>הוספת קטגוריה</h3>
+                <input formControlName="newCategoryName" placeholder="שם הקטגוריה">
+                @if(myform.get('newCategoryName')?.touched && myform.get('newCategoryName')?.invalid) {
+                <small style="color: #ef4444; font-size: 12px; margin-bottom: 8px; display: block;">חובה להזין שם
+                    לקטגוריה החדשה</small>
+                }
+
+                <div class="emoji-row">
+                    <input readonly formControlName="newCategoryIcon" placeholder="לחץ לבחירת אייקון"
+                        (click)="toggleEmojiPicker()">
+                    @if(myform.get('newCategoryIcon')?.touched && myform.get('newCategoryIcon')?.invalid) {
+                    <small style="color: #ef4444; font-size: 12px; margin-top: 4px; display: block;">חובה לבחור אייקון
+                        מתאים</small>
+                    }
+
+                    @if(showEmojiPicker){
+                    <div class="emoji-picker-container">
+                        <button type="button" (click)="toggleEmojiPicker()"
+                            style="background: none; color: #64748b; width: auto; padding: 5px;">✕</button>
+
+                        <emoji-mart (emojiClick)="selectEmoji($event)" [set]="'apple'" [showPreview]="false"
+                            [perLine]="7" [emojiSize]="24">
+                        </emoji-mart>
+                    </div>
+                    }
+                </div>
+            </div>
+            }
+
+            <button type="button" (click)="addRequest()" [disabled]="myform.invalid">
+                שליחת הבקשה
+            </button>
+        </form>
+    </div>
+</div>

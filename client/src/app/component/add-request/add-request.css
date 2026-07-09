@@ -1,0 +1,259 @@
+:host {
+  --ink-indigo: #16213e;
+  --stone: #e8e0cc;
+  --stone-deep: #c9bc9a;
+  --gold: #c99a3e;
+  --gold-light: #e3be72;
+  --paper: #fffcf5;
+  --text-main: #2a2420;
+  --text-muted: #6b6355;
+
+  --font-display: 'Frank Ruhl Libre', 'David Libre', serif;
+  --font-body: 'Assistant', 'Segoe UI', Tahoma, sans-serif;
+
+  display: block;
+}
+
+.form-page-container {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  overflow: hidden;
+  background-color: var(--stone);
+  background-image: radial-gradient(var(--stone-deep) 0.8px, transparent 0.8px);
+  background-size: 22px 22px;
+  box-sizing: border-box;
+  font-family: var(--font-body);
+}
+
+.form-page-container::before,
+.form-page-container::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  z-index: 0;
+  opacity: 0.5;
+}
+
+.form-page-container::before {
+  width: 340px;
+  height: 340px;
+  background: var(--gold-light);
+  top: -80px;
+  right: -80px;
+}
+
+.form-page-container::after {
+  width: 300px;
+  height: 300px;
+  background: var(--ink-indigo);
+  opacity: 0.12;
+  bottom: -60px;
+  left: -60px;
+}
+
+.form-wrapper {
+  position: relative;
+  z-index: 1;
+  max-width: 550px;
+  width: 100%;
+  background: var(--paper);
+  border-radius: 20px;
+  border-top: 3px solid var(--gold);
+  padding: 40px;
+  box-shadow: 0 20px 45px rgba(22, 33, 62, 0.15);
+  direction: rtl;
+  animation: fadeInForm 0.5s ease-out;
+  box-sizing: border-box;
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.form-header h2 {
+  font-family: var(--font-display);
+  color: var(--ink-indigo);
+  font-size: 1.9rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.form-header p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.field {
+  margin-bottom: 22px;
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+input, textarea, select {
+  padding: 13px 18px;
+  border: 1.5px solid var(--stone-deep);
+  border-radius: 12px;
+  background-color: var(--paper);
+  color: var(--text-main);
+  font-family: var(--font-body);
+  font-size: 0.98rem;
+  transition: all 0.25s ease;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  background-color: var(--paper);
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201, 154, 62, 0.15);
+}
+
+input.ng-invalid.ng-touched,
+textarea.ng-invalid.ng-touched {
+  border-color: #c15b41 !important;
+  background-color: #fdf5f2;
+}
+
+.error-container p,
+small {
+  color: #a3462f !important;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin: 6px 0 0;
+}
+
+button {
+  width: 100%;
+  padding: 15px;
+  background-color: var(--ink-indigo);
+  color: var(--paper);
+  border: none;
+  border-radius: 12px;
+  font-size: 1.02rem;
+  font-family: var(--font-body);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  margin-top: 8px;
+}
+
+button:hover:not(:disabled) {
+  background-color: var(--gold);
+  color: var(--ink-indigo);
+  transform: translateY(-2px);
+}
+
+button:disabled {
+  background-color: var(--stone-deep);
+  color: #a39a80;
+  cursor: not-allowed;
+  transform: none;
+}
+
+@keyframes fadeInForm {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.new-category-container {
+  position: relative;
+  padding: 16px 16px 20px;
+  margin-bottom: 8px;
+  background: var(--stone);
+  border-radius: 14px;
+}
+
+.new-category-container h3 {
+  font-family: var(--font-display);
+  color: var(--ink-indigo);
+  font-size: 1.05rem;
+  margin: 0 0 14px;
+}
+
+.emoji-row {
+  position: relative;
+  display: flex;
+  gap: 10px;
+  align-items: stretch;
+  direction: ltr;
+}
+
+.emoji-row input[readonly] {
+  flex: 1;
+  cursor: pointer;
+  text-align: center;
+  font-size: 1.4rem;
+}
+
+.emoji-row button {
+  width: auto;
+  white-space: nowrap;
+  padding: 0 20px;
+  margin-top: 0;
+}
+
+.emoji-picker-container {
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  z-index: 999;
+  width: min(320px, 92vw);
+  max-height: 300px;
+  overflow-y: auto;
+  background: var(--paper);
+  border: 1px solid var(--stone-deep);
+  border-radius: 14px;
+  box-shadow: 0 -10px 25px rgba(22, 33, 62, 0.18);
+  direction: ltr;
+  margin-bottom: 10px;
+}
+
+emoji-mart {
+  display: block;
+  width: 100%;
+}
+
+::ng-deep .emoji-mart-search input {
+  border: 1.5px solid var(--stone-deep) !important;
+  border-radius: 10px !important;
+  background-color: var(--paper) !important;
+  padding: 8px 12px !important;
+}
+
+::ng-deep .emoji-mart-search input:focus {
+  border-color: var(--gold) !important;
+  outline: none !important;
+}
+
+::ng-deep .emoji-mart {
+  border: none !important;
+  font-family: inherit !important;
+}
+
+::ng-deep .emoji-mart-anchor-selected {
+  color: var(--gold) !important;
+}
+
+::ng-deep .emoji-mart-anchor-selected .emoji-mart-anchor-bar {
+  background-color: var(--gold) !important;
+}
+
+@media (max-width: 480px) {
+  .form-wrapper { padding: 28px 20px; }
+  .form-header h2 { font-size: 1.55rem; }
+  .emoji-picker-container { right: -12px; }
+}

@@ -1,0 +1,12 @@
+<div class="add-answer-container">
+  <div class="typing-hint">
+    <span>שלח הצעה לעזרה...</span>
+  </div>
+  <textarea [(ngModel)]="content" name="answerContent" placeholder="יש לך איך לעזור? כתוב כאן..."
+    class="answer-textarea">
+</textarea>
+
+  <button (click)="addAnswer()" [disabled]="!content.trim()" class="submit-btn">
+    שליחת הצעה
+  </button>
+</div>
