@@ -1,47 +1,60 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using MailKit.Net.Smtp;
 using MimeKit;
-
+using Microsoft.Extensions.Configuration;
 namespace Bridge.Service
 {
     public class EmailService
     {
-        public void SendWelcomeEmail(string userEmail, string userName)
+        private readonly IConfiguration _configuration;
+        public EmailService(IConfiguration configuration)
         {
+            _configuration = configuration;
+        }
+        public async Task SendWelcomeEmailAsync(string userEmail, string userName)
+        {
+            string? emailSender = Environment.GetEnvironmentVariable("SMTP_EMAIL")
+                                 ?? _configuration["EmailSettings:SmtpEmail"];
+            string? emailPassword = Environment.GetEnvironmentVariable("SMTP_PASSWORD")
+                                   ?? _configuration["EmailSettings:SmtpPassword"];
+            string clientUrl = Environment.GetEnvironmentVariable("CLIENT_URL")
+                               ?? _configuration["ClientUrl"]
+                               ?? "http://localhost:4200/";
+
+            if (string.IsNullOrWhiteSpace(emailSender) || string.IsNullOrWhiteSpace(emailPassword))
+            {
+                throw new InvalidOperationException(
+                    "Email sender/password are not configured. Set EmailSettings:SmtpEmail and EmailSettings:SmtpPassword " +
+                    "in appsettings.Development.json (locally) or as SMTP_EMAIL/SMTP_PASSWORD environment variables (in production).");
+            }
+
+            string templatePath = Path.Combine(AppContext.BaseDirectory, "Templates", "WelcomeTemplate.html");
+            if (!File.Exists(templatePath))
+            {
+                throw new FileNotFoundException($"Email template not found at path: {templatePath}");
+            }
+            string htmlBody = File.ReadAllText(templatePath);
+            htmlBody = htmlBody.Replace("{{UserName}}", userName)
+                               .Replace("{{ClientUrl}}", clientUrl);
             var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("צוות הפרויקט", "your-email@gmail.com"));
+            message.From.Add(new MailboxAddress("מערכת Bridge", emailSender));
             message.To.Add(new MailboxAddress(userName, userEmail));
             message.Subject = "ברוך הבא למערכת!";
-            string htmlBody = $@"
-        <div style='font-family: Arial, sans-serif; direction: rtl; text-align: right; border: 1px solid #ddd; padding: 20px; border-radius: 10px;'>
-            <h1 style='color: #3b82f6;'>היי {userName}, ברוך הבא!</h1>
-            <p>שמחים מאוד שהצטרפת לקהילה שלנו.</p>
-            <p>אנחנו כאן לכל שאלה, ומחכים לראות אותך מתחיל!</p>
-            <br>
-            <a href='http://localhost:4200/' 
-               style='background-color: #3b82f6; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;'>
-               לכניסה לאתר
-            </a>
-        </div>";
-
-            message.Body = new TextPart("html") 
+            message.Body = new TextPart("html")
             {
                 Text = htmlBody
             };
-
             using (var client = new MailKit.Net.Smtp.SmtpClient())
             {
-                client.Connect("smtp.gmail.com", 587, false);
+                await client.ConnectAsync("smtp.gmail.com", 587, false);
 
-                client.Authenticate("chanaa710@gmail.com", "bybwmwmretmlbmie");
+                await client.AuthenticateAsync(emailSender, emailPassword);
 
-                client.Send(message);
-                client.Disconnect(true);
+                await client.SendAsync(message);
+
+                Console.WriteLine($"[EmailService] המייל נשלח בהצלחה לכתובת: {userEmail}");
+                await client.DisconnectAsync(true);
             }
         }
     }

@@ -73,15 +73,42 @@
 .message-wrapper {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  width: 100%;
 }
 
-.message-wrapper.owner-message {
+.message-wrapper:not(.owner-message) {
   align-items: flex-end;
 }
 
+.message-wrapper.owner-message {
+  align-items: flex-start;
+}
+
+.message-wrapper app-answer-item {
+  width: auto;
+  max-width: 75%;
+}
+
+.message-wrapper:not(.owner-message) app-answer-item {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.message-wrapper.owner-message app-answer-item {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+
 .message-info {
   margin-bottom: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; 
+}
+
+.message-wrapper.owner-message .message-info {
+  align-items: flex-start; 
 }
 
 .owner-tag {
@@ -91,6 +118,8 @@
   background: var(--gold-light);
   padding: 2px 10px;
   border-radius: 12px;
+  display: inline-block;
+  margin-bottom: 4px;
 }
 
 .empty-state-chat {

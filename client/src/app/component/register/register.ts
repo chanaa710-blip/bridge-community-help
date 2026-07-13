@@ -11,7 +11,7 @@ declare const google: any;
   templateUrl: './register.html',
   styleUrl: './register.css',
 })
-export class Register implements AfterViewInit{
+export class Register implements AfterViewInit {
   userService = inject(UserService);
   myform: FormGroup = new FormGroup({})
   arr: Array<string> = []
@@ -37,7 +37,7 @@ export class Register implements AfterViewInit{
 
   initAutocomplete() {
     const autocomplete = new google.maps.places.Autocomplete(this.addressInput.nativeElement, {
-      fields: ['geometry', 'formatted_address'] 
+      fields: ['geometry', 'formatted_address']
     });
 
     autocomplete.addListener('place_changed', () => {
@@ -48,7 +48,7 @@ export class Register implements AfterViewInit{
           lat: place.geometry.location.lat(),
           lng: place.geometry.location.lng()
         });
-        
+
         console.log('מיקום נבחר:', place.geometry.location.lat(), place.geometry.location.lng());
       }
     });
@@ -73,47 +73,49 @@ export class Register implements AfterViewInit{
       },
       error: (err) => {
         console.error('שגיאה ברישום המשתמש:', err);
-        if(err.status === 409) {
+        if (err.status === 409) {
           alert('משתמש עם כתובת אימייל זו כבר רשום.');
           this.router.navigate(['/login']);
+        } else {
+          alert('אירעה שגיאה ברישום. אנא נסה שוב מאוחר יותר.');
         }
       }
     });
   }
 
 
-translations: { [key: string]: string } = {
-  name: 'שם מלא',
-  email: 'כתובת אימייל',
-  phone: 'מספר טלפון',
-  password: 'סיסמה מאובטחת'
-};
+  translations: { [key: string]: string } = {
+    name: 'שם מלא',
+    email: 'כתובת אימייל',
+    phone: 'מספר טלפון',
+    password: 'סיסמה מאובטחת'
+  };
 
-setCurrentLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      position => {
-        const lat = position.coords.latitude;
-        const lng = position.coords.longitude;
+  setCurrentLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          const lat = position.coords.latitude;
+          const lng = position.coords.longitude;
 
-        this.myform.patchValue({ lat, lng });
+          this.myform.patchValue({ lat, lng });
 
-        const geocoder = new google.maps.Geocoder();
-        geocoder.geocode({ location: { lat, lng } }, (results: any, status: any) => {
-          if (status === 'OK' && results[0]) {
+          const geocoder = new google.maps.Geocoder();
+          geocoder.geocode({ location: { lat, lng } }, (results: any, status: any) => {
+            if (status === 'OK' && results[0]) {
 
-            this.addressInput.nativeElement.value = results[0].formatted_address;
-          } else {
-            this.addressInput.nativeElement.value = '📍 מיקום נוכחי נקלט בהצלחה';
-          }
-        });
-      },
-      error => {
-        console.error('שגיאה בקבלת המיקום:', error);
-        alert('לא ניתן לקבל את המיקום. אנא אפשר גישה למיקום בדפדפן.');
-      },
-      { enableHighAccuracy: true } 
-    );
+              this.addressInput.nativeElement.value = results[0].formatted_address;
+            } else {
+              this.addressInput.nativeElement.value = '📍 מיקום נוכחי נקלט בהצלחה';
+            }
+          });
+        },
+        error => {
+          console.error('שגיאה בקבלת המיקום:', error);
+          alert('לא ניתן לקבל את המיקום. אנא אפשר גישה למיקום בדפדפן.');
+        },
+        { enableHighAccuracy: true }
+      );
+    }
   }
-}
 }

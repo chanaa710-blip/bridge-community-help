@@ -18,12 +18,12 @@ namespace Bridge.Service
         private readonly IPasswordHasher _passwordHasher;
         private readonly IMapper _mapper;
         private readonly EmailService _emailService;
-        public UserService(IUserRepository userRepository, IPasswordHasher passwordHasher, IMapper mapper)
+        public UserService(IUserRepository userRepository, IPasswordHasher passwordHasher, IMapper mapper, EmailService emailService)
         {
             _userRepository = userRepository;
             _passwordHasher = passwordHasher;
             _mapper = mapper;
-            _emailService = new EmailService();
+            _emailService = emailService;
         }
 
         public Task<Guid> Add(UserResource entity)
@@ -90,8 +90,16 @@ namespace Bridge.Service
                     SRID = 4326
                 }
             };
+
             await _userRepository.Add(newUser);
-            _emailService.SendWelcomeEmail(newUser.Email, newUser.Name);
+            try
+            {
+                await _emailService.SendWelcomeEmailAsync(newUser.Email, newUser.Name);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[EmailService] שליחת מייל נכשלה: {ex.Message}");
+            }
             return _mapper.Map<UserResource>(newUser);
         }
 
