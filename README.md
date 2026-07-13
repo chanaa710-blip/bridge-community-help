@@ -26,7 +26,6 @@
 - [Setup & Run](#-setup--run)
 - [Main API Endpoints](#-main-api-endpoints)
 - [Data Model](#-data-model)
-- [⚠️ Important Security Notes Before Publishing on GitHub](#️-important-security-notes-before-publishing-on-github)
 - [License](#-license)
 
 ---
@@ -310,19 +309,6 @@ Request 1───* Answer  *───1 User
 
 - A **Request** contains a title, content, location (lat/lng), status (Open/InProgress/Closed/Canceled), and category.
 - The database uses **NetTopologySuite** to run spatial queries (find "requests/users within X km of me").
-
----
-
-## ⚠️ Important Security Notes Before Publishing on GitHub
-
-Before you `push` this project to a **public** GitHub repository, please note:
-
-1. **Google Maps API key** – no longer hardcoded in `index.html`. It now lives in `client/src/environments/environment.ts`, which is excluded from Git (`.gitignore`). Only `environment.example.ts` (a placeholder template) is committed. Each developer creates their own `environment.ts` locally with their own key (see setup instructions above). It is still recommended to restrict the key in the [Google Cloud Console](https://console.cloud.google.com/) (HTTP referrer restrictions + limiting allowed APIs to Maps JavaScript API + Places API).
-2. **SQL connection string** – the real local connection string lives in `server/Bridge.Api/appsettings.Development.json`, which is excluded from Git. `appsettings.json` only contains a generic placeholder. ASP.NET Core automatically loads `appsettings.Development.json` on top of `appsettings.json` when running locally, so no code changes are needed to use it.
-3. Make sure you have an appropriate `.gitignore` that excludes:
-   - **Server side:** `bin/`, `obj/`, `*.user`
-   - **Client side:** `node_modules/`, `dist/`, `.angular/`
-4. **User passwords** – make sure `PasswordHasher` actually hashes passwords (rather than storing them in plain text) before uploading a demo with real users.
 
 ---
 
