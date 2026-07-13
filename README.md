@@ -1,3 +1,5 @@
+
+
 # 🌉 Bridge – Location-Based Community Help Platform
 
 <p align="center">
@@ -19,7 +21,6 @@
 
 - [Key Features](#-key-features)
 - [Screenshots](#-screenshots)
-- [Demo](#-demo)
 - [Architecture & Tech Stack](#️-architecture--tech-stack)
 - [Recommended Repository Structure](#-recommended-repository-structure)
 - [Prerequisites](#-prerequisites)
@@ -80,14 +81,6 @@
 <p align="center">
   <img src="screenshots/login.png" width="45%">
   <img src="screenshots/register.png" width="45%">
-</p>
-
----
-
-## 🎥 Demo
-
-<p align="center">
-  <video src="demo/bridge-demo.mp4" width="900" controls></video>
 </p>
 
 ---
