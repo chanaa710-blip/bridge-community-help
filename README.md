@@ -7,6 +7,10 @@
   <img src="https://img.shields.io/badge/Google_Maps_API-4285F4?logo=googlemaps&logoColor=white" />
 </p>
 
+<p align="center">
+  <img src="screenshots/hero.png" width="100%">
+</p>
+
 **Bridge** is a web application for mutual help between neighbors and community members. Users can post **help requests** categorized by type, browse an **interactive map** of nearby requests and users, and respond to requests with **answers / offers of help**. The project follows a full **Client-Server** architecture: a modern Angular client talking to a layered ASP.NET Core API.
 
 ---
@@ -14,6 +18,8 @@
 ## 📋 Table of Contents
 
 - [Key Features](#-key-features)
+- [Screenshots](#-screenshots)
+- [Demo](#-demo)
 - [Architecture & Tech Stack](#️-architecture--tech-stack)
 - [Recommended Repository Structure](#-recommended-repository-structure)
 - [Prerequisites](#-prerequisites)
@@ -35,6 +41,55 @@
 - 💬 **Answering requests** – any user can respond and offer help on an existing request
 - 👤 **Personal user profile** with editable details and location
 - 🔎 **Geographic (nearby) search** for requests and users within a given radius, using spatial queries
+
+---
+
+## 📸 Screenshots
+
+### 🏠 Dashboard
+
+<p align="center">
+  <img src="screenshots/dashboard.png" width="900">
+</p>
+
+### 🗺️ Interactive Map
+
+<p align="center">
+  <img src="screenshots/map.png" width="900">
+</p>
+
+### ➕ Create Help Request
+
+<p align="center">
+  <img src="screenshots/create-request.png" width="900">
+</p>
+
+### 💬 Request Details & Answers
+
+<p align="center">
+  <img src="screenshots/request-details.png" width="900">
+</p>
+
+### 👤 User Profile
+
+<p align="center">
+  <img src="screenshots/profile.png" width="900">
+</p>
+
+### 🔐 Authentication
+
+<p align="center">
+  <img src="screenshots/login.png" width="45%">
+  <img src="screenshots/register.png" width="45%">
+</p>
+
+---
+
+## 🎥 Demo
+
+<p align="center">
+  <video src="demo/bridge-demo.mp4" width="900" controls></video>
+</p>
 
 ---
 
