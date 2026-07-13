@@ -1,0 +1,6 @@
+*.ts linguist-documentation=false
+*.html linguist-documentation=false
+
+server/**/*.Designer.cs linguist-vendored
+obj/** linguist-generated
+bin/** linguist-generated
